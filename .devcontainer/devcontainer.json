@@ -22,12 +22,14 @@
             }
         },
         "extensions": [
-                      "mhutchie.git-graph",
-                      "ms-azuretools.vscode-docker",
-                      "charliermarsh.ruff",
-                      "ms-python.python",
-                      "ms-toolsai.jupyter"
-                      ]
+            "mhutchie.git-graph",
+            "ms-azuretools.vscode-docker",
+            "charliermarsh.ruff",
+            "ms-python.python",
+            "ms-toolsai.jupyter",
+            "github.vscode-github-actions",
+            "Boto3typed.boto3-ide"
+        ]
       }
   },
 
