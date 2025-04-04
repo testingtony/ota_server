@@ -1,2 +1,2 @@
 def test_nothing():  # noqa: D100, D103
-    assert 1 == 1
+    assert 1 == 0
