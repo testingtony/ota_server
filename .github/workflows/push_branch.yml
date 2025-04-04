@@ -1,0 +1,23 @@
+name: 'build'
+on:
+  pull_request:
+  push:
+    branches:
+      - "*"
+      - "!trunk"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout (GitHub)
+        uses: actions/checkout@v4
+
+      - name: Build and run dev container task
+        uses: devcontainers/ci@v0.3
+        with:
+          runCmd: |
+            poetry install
+            poetry run pytest
+            poetry run flake8

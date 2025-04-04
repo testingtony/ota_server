@@ -1,0 +1,36 @@
+name: Release the version
+run-name: ${{ github.actor }} tagged a branch
+on:
+  push:
+    tags:
+      - "v*"
+permissions: write-all
+
+jobs:
+  test:
+    name: Test and create a release if good
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout (GitHub)
+        uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+          fetch-depth: 0
+
+      - name: Build and run dev container task
+        uses: devcontainers/ci@v0.3
+        with:
+          runCmd: |
+            poetry install && \
+            poetry run pytest && \
+            poetry run flake8 && \
+            poetry build
+
+      - name: Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            dist/*.whl

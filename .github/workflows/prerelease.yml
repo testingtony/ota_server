@@ -1,0 +1,46 @@
+name: Create a Pre-release build
+permissions: write-all
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - "trunk"
+
+jobs:
+  test:
+    name: Test and create a pre-release if good
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout (GitHub)
+        uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+          fetch-depth: 0
+
+      - name: Build and run dev container task
+        uses: devcontainers/ci@v0.3
+        with:
+          runCmd: |
+            poetry install && \
+            poetry run pytest && \
+            poetry run flake8 && \
+            poetry build
+
+      - name: Rollback if tests fails
+        if: failure()
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git reset --hard latest
+          git push --force
+
+      - name: Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            dist/*.whl

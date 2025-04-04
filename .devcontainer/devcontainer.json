@@ -1,0 +1,39 @@
+{
+    "build": { "dockerfile": "Dockerfile" },
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "python.defaultInterpreterPath": "/home/vscode/.virtualenvs/poetry/bin/python",
+          "python.terminal.activateEnvInCurrentTerminal": true,
+          "python.terminal.activateEnvironment": true,
+          "jupyter.kernels.excludePythonEnvironments": ["/usr/local/bin/python",
+                                                        "/usr/bin/python3",
+                                                        "/bin/python3"],
+            "python.testing.pytestArgs": [
+                "."
+            ],
+            "python.testing.unittestEnabled": false,
+            "python.testing.pytestEnabled": true,
+            "notebook.lineNumbers": "on",
+            "notebook.output.scrolling": true,
+            "files.exclude": {
+              "**/__pycache__": true,
+              "**/.pytest_cache": true
+            }
+        },
+        "extensions": [
+                      "mhutchie.git-graph",
+                      "ms-azuretools.vscode-docker",
+                      "charliermarsh.ruff",
+                      "ms-python.python",
+                      "ms-toolsai.jupyter"
+                      ]
+      }
+  },
+
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+  },
+
+  "postCreateCommand": "bash .devcontainer/post-install.sh"
+}
