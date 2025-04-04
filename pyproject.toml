@@ -1,24 +1,31 @@
-[tool.poetry]
-name = "template"
+[project]
+name = "ota-server"
 version = "0.1.0"
-description = "A template poetry project"
-authors = ["Tony Holroyd <testingtony12@gmail.com>"]
+description = ""
+authors = [
+    {name = "Tony Holroyd",email = "testingtony12@gmail.com"}
+]
 readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+]
 
-[tool.poetry.dependencies]
-python = "^3.12"
+[tool.poetry]
+packages = [{include = "ota_server", from = "src"}]
+
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.1.1"
-flake8 = "^7.0.0"
-pre-commit = "^4.1.0"
-ruff = "^0.9.6"
+pytest = "^8.3.5"
+flake8 = "^7.2.0"
+pre-commit = "^4.2.0"
+ruff = "^0.11.4"
+
+
+[tool.poetry.group.local.dependencies]
+boto3 = "^1.37.27"
 
 [tool.pytest.ini_options]
 addopts = "--doctest-modules"
-
-[tool.poetry.scripts]
-my_package_cli = 'my_package.console:run'
 
 [tool.ruff]
 line-length = 120
@@ -34,7 +41,6 @@ indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
 
-
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
