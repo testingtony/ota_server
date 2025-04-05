@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - "*"
-      - "!trunk"
+      - "!main"
 
 jobs:
   test:
@@ -14,10 +14,9 @@ jobs:
       - name: Checkout (GitHub)
         uses: actions/checkout@v4
 
-      - name: Build and run dev container task
-        uses: devcontainers/ci@v0.3
-        with:
-          runCmd: |
-            poetry install
-            poetry run pytest
-            poetry run flake8
+      - name: Test the code
+        run: |
+          pipx install poetry && \
+          poetry install && \
+          poetry run pytest && \
+          poetry run ruff check
